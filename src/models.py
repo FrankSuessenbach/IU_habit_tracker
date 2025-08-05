@@ -16,8 +16,9 @@ class Habit(Base):
     __tablename__ = "habits"
 
     id = Column(Integer, primary_key=True)
-    name = Column(String, nullable=False)
-    periodicity = Column(String, nullable=False)  # e.g., "daily", "weekly", "monthly"
+    name = Column(String(50), nullable=False)
+    description = Column(String(255), nullable=True)
+    periodicity = Column(String, nullable=False)  # "daily", "weekly" or "monthly"
     creation_date = Column(DateTime, default=datetime.now)
 
     # One-to-many relationship with Completion
@@ -37,7 +38,7 @@ class Completion(Base):
     habit_id = Column(Integer, ForeignKey("habits.id"), nullable=False)
     date = Column(DateTime, nullable=False, default=datetime.now)
 
-    # Reference back to the habit
+    # Reference to the habit
     habit = relationship("Habit", back_populates="completions")
 
     def __repr__(self):

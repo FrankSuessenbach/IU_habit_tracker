@@ -2,27 +2,27 @@
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from models import Base
+from .models import Base
 
-# Datenbankpfad (SQLite-Datei im Projektverzeichnis)
+# path to database file
 DATABASE_URL = "sqlite:///habits.db"
 
-# Engine erstellen (Verbindung zur DB)
+# create engine and connection to the database
 engine = create_engine(DATABASE_URL, echo=False, future=True)
 
-# Session-Factory: Jede Sitzung ist eine neue DB-Verbindung
+# Session-Factory: new connection for each session
 SessionLocal = sessionmaker(bind=engine)
 
 def init_db():
     """
-    Erstellt alle Tabellen, falls sie noch nicht existieren.
+    create the database tables, if they don't exist yet.
     """
     Base.metadata.create_all(bind=engine)
 
 def get_session():
     """
-    Erzeugt und gibt eine neue Datenbank-Session zurück.
-    Nutzung z.B. via:  
+    create and return a new database session.
+    Usage example:
         with get_session() as session:
             ...
     """
